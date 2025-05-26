@@ -2,8 +2,8 @@ import Coupon from "../model/couponSchema.js";
 
 export const createCoupon = async (req, res) => {
   try {
-    const { title, code, website, description } = req.body;
-    if (!title || !code || !website || !description) {
+    const { title, code, website, description,description1,discount,category,logo } = req.body;
+    if (!title || !code || !website) {
       return res.status(400).json({ message: "Please fill all the fields!" });
     }
 
@@ -21,6 +21,10 @@ export const createCoupon = async (req, res) => {
       code,
       website,
       description,
+      description1,
+      discount ,
+      category,
+      logo
       //   logo: `/uploads/${req.file.filename}`,
     });
 
@@ -38,10 +42,10 @@ export const createCoupon = async (req, res) => {
 
 export const updateCoupon = async (req, res) => {
   try {
-    const { title, code, website, description } = req.body;
+    const { title, code, website, description ,description1,discount } = req.body;
     const id = req.params.id;
-    console.log(title, code , website , description )
-    if (!title || !code || !website || !description) {
+    console.log(title, code , website )
+    if (!title || !code || !website) {
       return res.status(400).json({ message: "Please fill all the fields!" });
     }
     const check = await Coupon.findOne({ code });
@@ -72,7 +76,7 @@ export const deleteCoupon = async (req,res) =>{
 
 export const getAllCoupon = async (req , res) =>{
     try {
-        const coupons = await Coupon.find();
+        const coupons = await Coupon.find().populate('category');
         res.status(200).json({message:"Coupons Fetched Successfully",data:coupons})
     } catch (error) {
         console.log(error);

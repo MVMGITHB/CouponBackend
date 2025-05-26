@@ -13,14 +13,33 @@ const couponSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+
   description: {
     type: String,
-    required: true,
+    // required: true,
   },
+
+   category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category', // Allows categories to have subcategories (optional)
+    default: null,
+  },
+
+
+ description1: {
+  type: [String],
+},
+
+discount:{
+  type:String,
+},
+
+
+
   logo: {
     type: String,
-    default:
-      "https://img.freepik.com/free-vector/branding-identity-corporate-vector-logo-r-design_460848-8630.jpg?ga=GA1.1.170324605.1744353854&semt=ais_hybrid&w=740",
+    default:"https://img.freepik.com/free-vector/branding-identity-corporate-vector-logo-r-design_460848-8630.jpg?ga=GA1.1.170324605.1744353854&semt=ais_hybrid&w=740",
   },
   timestamps: {
     type: Date,
