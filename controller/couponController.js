@@ -2,7 +2,7 @@ import Coupon from "../model/couponSchema.js";
 
 export const createCoupon = async (req, res) => {
   try {
-    const { title, code, website, description,description1,discount,category,logo } = req.body;
+    const { title, code, website, description,description1,discount,category,logo ,slug} = req.body;
     if (!title || !code || !website) {
       return res.status(400).json({ message: "Please fill all the fields!" });
     }
@@ -24,7 +24,8 @@ export const createCoupon = async (req, res) => {
       description1,
       discount ,
       category,
-      logo
+      logo,
+      slug:slugify(req.body.slug).toLowerCase()
       //   logo: `/uploads/${req.file.filename}`,
     });
 
@@ -52,7 +53,7 @@ export const updateCoupon = async (req, res) => {
     if (check && check._id != id) {
       return res.status(400).json({ message: "Coupon Already Exists" });
     }
-    const updateCoupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, {
+    const updateCoupon = await Coupon.findByIdAndUpdate(req.params.id, {...req.body,slug:slugify(req.body.slug).toLowerCase()}, {
         new: true,
       });
     res.status(200).json({ message: "Coupon Updated Successfully", data: updateCoupon });

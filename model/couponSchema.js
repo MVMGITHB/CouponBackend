@@ -15,6 +15,13 @@ const couponSchema = new mongoose.Schema({
   },
 
 
+   slug: {
+    type: String,
+    // unique: true,
+    index: true,
+  },
+
+
   description: {
     type: String,
     // required: true,
@@ -36,11 +43,12 @@ discount:{
 },
 
 
-
   logo: {
     type: String,
     default:"https://img.freepik.com/free-vector/branding-identity-corporate-vector-logo-r-design_460848-8630.jpg?ga=GA1.1.170324605.1744353854&semt=ais_hybrid&w=740",
   },
+
+
   timestamps: {
     type: Date,
     default: Date.now,
