@@ -1,5 +1,5 @@
 import Coupon from "../model/couponSchema.js";
-
+import slugify from 'slugify';
 export const createCoupon = async (req, res) => {
   try {
     const { title, code, website, description,description1,discount,category,logo ,slug} = req.body;
