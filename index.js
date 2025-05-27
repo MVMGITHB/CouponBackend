@@ -5,6 +5,8 @@ import { connectDB } from './database/db.js';
 import userRoute from './route/userRoute.js'
 import couponRoute from './route/couponRoute.js'
 import categoryRoutes from './route/categoryRoutes.js'; 
+import bestOfferRoutes from './route/bestOfferRoutes.js'; 
+import dealOnFireRoutes from './route/dealOnFireRoutes.js'; 
 
 dotenv.config();
 
@@ -26,6 +28,8 @@ connectDB(DATABASE)
 app.use('/api/user',userRoute)
 app.use('/api/coupon',couponRoute)
 app.use("/api/catagory", categoryRoutes);
+app.use("/api/bestOffer", bestOfferRoutes);
+app.use("/api/dealOnFire", dealOnFireRoutes);
 
 app.get('/', (req, res) => {
   res.send('<h1>Welcome to the server</h1>');
