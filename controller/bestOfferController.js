@@ -32,6 +32,29 @@ export const getBestOfferById = async (req, res) => {
   }
 };
 
+
+export const updateStatus = async (req, res) => {
+  try {
+
+    let jobs = await BestOffer.findById(req.params.id)
+   
+
+    if (!jobs) return res.status(404).json({ error: "Job not found" });
+
+    if(jobs.status ==='Inactive')  {
+      jobs.status ='Active'
+    }else{
+      jobs.status ='Inactive'
+    }
+
+   const Jobs =  await  jobs.save()
+
+    res.json(Jobs);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 // Update BestOffer
 export const updateBestOffer = async (req, res) => {
   try {

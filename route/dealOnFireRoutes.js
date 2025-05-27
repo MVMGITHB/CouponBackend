@@ -5,6 +5,7 @@ import {
   getDealOnFireById,
   updateDealOnFire,
   deleteDealOnFire,
+  updateStatus,
 } from '../controller/dealOnFireController.js';
 
 const router = express.Router();
@@ -12,6 +13,7 @@ const router = express.Router();
 router.post('/create', createDealOnFire);
 router.get('/getAll', getAllDealsOnFire);
 router.get('/getOne/:id', getDealOnFireById);
+router.patch('/toggled/:id' ,updateStatus);
 router.put('/update/:id', updateDealOnFire);
 router.delete('/delete/:id', deleteDealOnFire);
 
