@@ -14,7 +14,7 @@ const DATABASE=process.env.DATABASE_URI;
 
 
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:5173/","http://localhost:5173","https://couponsculture.com/","https://couponsculture.com"],
+    origin: ["http://localhost:3000", "http://localhost:5173/","http://localhost:5173","https://couponsculture.com/","https://couponsculture.com","https://coupon-admin-pink.vercel.app/","https://coupon-admin-pink.vercel.app"],
   credentials: true
 }))
 app.use(express.json());
