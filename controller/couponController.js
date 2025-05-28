@@ -108,9 +108,11 @@ export const getAllCoupon = async (req , res) =>{
         res.status(404).json({message:"Server Error"});
     }
 }
+
+
 export const getCouponByCategorySlug = async (req , res) =>{
     try {
-      const category = await Category.find({slug:req.params.slug})
+      const category = await Category.findOne({slug:req.params.slug})
         const coupons = await Coupon.find({category:category?._id}).populate('category');
         res.status(200).json({message:"Coupons Fetched Successfully",data:coupons})
     } catch (error) {
@@ -118,6 +120,7 @@ export const getCouponByCategorySlug = async (req , res) =>{
         res.status(404).json({message:"Server Error"});
     }
 }
+
 
 export const getSingleCoupon = async (req, res) =>{
     try {
