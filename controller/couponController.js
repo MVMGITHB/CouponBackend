@@ -1,5 +1,6 @@
 import Coupon from "../model/couponSchema.js";
 import slugify from 'slugify';
+import Category from '../model/CatagoryModel.js'
 export const createCoupon = async (req, res) => {
   try {
     const { title, code, website, description,description1,discount,category,logo ,slug} = req.body;
@@ -101,6 +102,16 @@ export const deleteCoupon = async (req,res) =>{
 export const getAllCoupon = async (req , res) =>{
     try {
         const coupons = await Coupon.find().populate('category');
+        res.status(200).json({message:"Coupons Fetched Successfully",data:coupons})
+    } catch (error) {
+        console.log(error);
+        res.status(404).json({message:"Server Error"});
+    }
+}
+export const getCouponByCategorySlug = async (req , res) =>{
+    try {
+      const category = await Category.find({slug:req.params.slug})
+        const coupons = await Coupon.find({category:category?._id}).populate('category');
         res.status(200).json({message:"Coupons Fetched Successfully",data:coupons})
     } catch (error) {
         console.log(error);
