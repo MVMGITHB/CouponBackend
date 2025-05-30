@@ -92,24 +92,30 @@ export const updateStatus = async (req, res) => {
 
 export const Search = async(req,res)=>{
 
-  try {
+try {
     const { q } = req.query;
 
     if (!q || q.trim() === "") {
       return res.status(400).json({ message: "Search query is required" });
     }
 
-    const regex = new RegExp(q.trim(), "i"); // case-insensitive
+    const regex = new RegExp(q.trim(), "i"); // case-insensitive regex
 
+    // Step 1: Find matching categories
+    const matchingCategories = await Category.find({ name: regex }).select("_id");
+    const categoryIds = matchingCategories.map(cat => cat._id);
+
+    // Step 2: Search coupons
     const results = await Coupon.find({
       $or: [
         { title: regex },
         { code: regex },
         { website: regex },
         { description: regex },
-        { description1: { $in: [regex] } }, // ✅ fixed for array of strings
+        { description1: { $in: [regex] } }, // array of strings
+        { category: { $in: categoryIds } }  // match category by ID
       ],
-    });
+    }).populate("category"); // optional: populate category details
 
     res.json(results);
   } catch (error) {
