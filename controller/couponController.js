@@ -92,19 +92,14 @@ export const updateStatus = async (req, res) => {
 
 export const Search = async(req,res)=>{
 
-  try {1
+  try {
     const { q } = req.query;
 
-    if (!q || q.trim() === '') {
-      return res.status(400).json({ message: 'Query string is required' });
+    if (!q || q.trim() === "") {
+      return res.status(400).json({ message: "Search query is required" });
     }
 
-    const regex = new RegExp(q, 'i');
-
-    // Find categories that match the query
-    const matchingCategories = await Category.find({ name: regex }).select('_id');
-
-    const categoryIds = matchingCategories.map(cat => cat._id);
+    const regex = new RegExp(q.trim(), "i"); // case-insensitive
 
     const results = await Coupon.find({
       $or: [
@@ -112,15 +107,14 @@ export const Search = async(req,res)=>{
         { code: regex },
         { website: regex },
         { description: regex },
-        { description1: { $in: [regex] } },
-        { category: { $in: categoryIds } }, // Match category by ID
+        { description1: { $in: [regex] } }, // ✅ fixed for array of strings
       ],
-    }).populate('category'); // Optional: populate category details
+    });
 
     res.json(results);
   } catch (error) {
-    console.error('Search error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error("Search error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 
 }
