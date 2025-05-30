@@ -88,6 +88,46 @@ export const updateStatus = async (req, res) => {
   }
 };
 
+
+
+export const Search = async(req,res)=>{
+
+  try {1
+    const { q } = req.query;
+
+    if (!q || q.trim() === '') {
+      return res.status(400).json({ message: 'Query string is required' });
+    }
+
+    const regex = new RegExp(q, 'i');
+
+    // Find categories that match the query
+    const matchingCategories = await Category.find({ name: regex }).select('_id');
+
+    const categoryIds = matchingCategories.map(cat => cat._id);
+
+    const results = await Coupon.find({
+      $or: [
+        { title: regex },
+        { code: regex },
+        { website: regex },
+        { description: regex },
+        { description1: { $in: [regex] } },
+        { category: { $in: categoryIds } }, // Match category by ID
+      ],
+    }).populate('category'); // Optional: populate category details
+
+    res.json(results);
+  } catch (error) {
+    console.error('Search error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+
+}
+
+
+
+
 export const deleteCoupon = async (req,res) =>{
     try {
         const id= req.params.id;
