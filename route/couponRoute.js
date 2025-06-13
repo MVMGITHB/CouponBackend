@@ -8,6 +8,7 @@ router.patch('/toggled/:id' ,updateStatus);
 router.get('/getAllCoupon' ,getAllCoupon);
 router.get('/search' ,Search);
 router.get('/getSingleCoupon/:id', getSingleCoupon);
+router.patch('/toggled/:id', updateStatus);
 router.get('/getCouponByCategorySlug/:slug', getCouponByCategorySlug);
 router.delete('/delete/:id', deleteCoupon);
 

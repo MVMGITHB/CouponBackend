@@ -4,9 +4,9 @@ import Category from '../model/CatagoryModel.js'
 export const createCoupon = async (req, res) => {
   try {
     const { title, code, website, description,description1,discount,category,logo ,slug} = req.body;
-    if (!title || !code || !website) {
-      return res.status(400).json({ message: "Please fill all the fields!" });
-    }
+    // if (!title || !code || !website) {
+    //   return res.status(400).json({ message: "Please fill all the fields!" });
+    // }
 
     // if (!req.file) {
     //     return res.status(400).json({ message: "Logo is required!" });
@@ -46,12 +46,12 @@ export const updateCoupon = async (req, res) => {
   try {
     const { title, code, website, description ,description1,discount } = req.body;
     const id = req.params.id;
-    console.log(title, code , website )
-    if (!title || !code || !website) {
-      return res.status(400).json({ message: "Please fill all the fields!" });
-    }
+    // console.log(title, code , website )
+    // if (!title || !code || !website) {
+    //   return res.status(400).json({ message: "Please fill all the fields!" });
+    // }
     const check = await Coupon.findOne({ code });
-    if (check && check._id != id) {
+    if (check && check?._id != id) {
       return res.status(400).json({ message: "Coupon Already Exists" });
     }
     const updateCoupon = await Coupon.findByIdAndUpdate(req.params.id, {...req.body,slug:slugify(req.body.slug).toLowerCase()}, {
