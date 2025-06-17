@@ -12,10 +12,10 @@ export const createCoupon = async (req, res) => {
     //     return res.status(400).json({ message: "Logo is required!" });
     //   }
 
-    const check = await Coupon.findOne({ code });
-    if (check) {
-      return res.status(400).json({ message: "Coupon Already Exists" });
-    }
+    // const check = await Coupon.findOne({ code });
+    // if (check) {
+    //   return res.status(400).json({ message: "Coupon Already Exists" });
+    // }
 
     const newCoupon = new Coupon({
       title,
@@ -50,10 +50,12 @@ export const updateCoupon = async (req, res) => {
     // if (!title || !code || !website) {
     //   return res.status(400).json({ message: "Please fill all the fields!" });
     // }
-    const check = await Coupon.findOne({ code });
-    if (check && check?._id != id) {
-      return res.status(400).json({ message: "Coupon Already Exists" });
-    }
+    // const check = await Coupon.findOne({ code });
+    // if (check && check?._id != id) {
+    //   return res.status(400).json({ message: "Coupon Already Exists" });
+    // }
+
+
     const updateCoupon = await Coupon.findByIdAndUpdate(req.params.id, {...req.body,slug:slugify(req.body.slug).toLowerCase()}, {
         new: true,
       });
